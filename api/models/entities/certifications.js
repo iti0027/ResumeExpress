@@ -1,20 +1,20 @@
 const certificateModel = (sequelize, {DataTypes}) => {
     const certification = sequelize.define('Certification', {
-        certificate1: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
             valide: {
                 notEmpty: true
             }
         },
-            certificate2: {
+        startDate: {
             type: DataTypes.STRING,
             allowNull: false,
             valide: {
                 notEmpty: true
             }
         },
-            certificate3: {
+        endDate: {
             type: DataTypes.STRING,
             allowNull: false,
             valide: {
@@ -22,8 +22,13 @@ const certificateModel = (sequelize, {DataTypes}) => {
             }
         },
     });
+
+    certification.associate = (models) => {
+        certification.belongsTo(models.user);
+    };
+        
     return certification;
 
 };
 
-export {certificateModel};
+export default certificateModel;

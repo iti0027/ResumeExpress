@@ -2,20 +2,32 @@ const workExpModel = (sequelize, {DataTypes}) => {
     const workExp = sequelize.define('WorkExperience', {
         currentJob:{
             type:DataTypes.STRING,
+            unique: true,
             allowNull: false,
             valide:{
-                notEmpty: true
+                notEmpty: true,
             }
         },
         companyName:{
             type:DataTypes.STRING,
+            unique: true,
             allowNull: false,
             valide:{
-                notEmpty: true
-        }
+                notEmpty: true,
+            }
         },
+
+        description: {
+            type:DataTypes.STRING,
+            allowNull: false,
+            valide:{
+                notEmpty: true,
+            }
+        },
+
         startDate:{
             type:DataTypes.DATE,
+            unique: true,
             allowNull: false,
             valide:{
                 notEmpty: true
@@ -23,7 +35,12 @@ const workExpModel = (sequelize, {DataTypes}) => {
         }
 
     });
+
+    workExp.associate = (models) => {
+        workExp.belongsTo(models.user);
+    };
+
     return workExp;
 };
 
-export {workExpModel};
+export default workExpModel;

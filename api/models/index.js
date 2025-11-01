@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize";
+
+
 import pg from "pg";
 import { userModel } from "./entities/user.js";
 import { workExpModel } from "./entities/workExperience.js";
@@ -12,9 +14,18 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialectOptions: {
         ssl: {require: true, rejectUnauthorized: false}}});
 
-const modelUser = {user: userModel(sequelize, Sequelize)};
-const modelWorkExp = {workExperience: workExpModel(sequelize, Sequelize)};
-const moduleCert = {certification: certificateModel(sequelize, Sequelize)};
+const models = {
+    User: userModel(sequelize, Sequelize),
+    Certification: certificateModel(sequelize, Sequelize),
+    WorkExperience: workExpModel(sequelize, Sequelize),
+};
+
+Object.keys(models).forEach((key) => {
+    if("associate" in models[key]) {
+        models[key].associate(models);
+    }
+});
+
 
 export {sequelize};
-export default {modelUser, modelWorkExp, moduleCert};
+export default models;
