@@ -3,28 +3,28 @@ const certificateModel = (sequelize, {DataTypes}) => {
         title: {
             type: DataTypes.STRING,
             allowNull: false,
-            valide: {
+            validate: {
                 notEmpty: true
             }
         },
         startDate: {
             type: DataTypes.STRING,
             allowNull: false,
-            valide: {
+            validate: {
                 notEmpty: true
             }
         },
         endDate: {
             type: DataTypes.STRING,
             allowNull: false,
-            valide: {
+            validate: {
                 notEmpty: true
             }
         },
     });
 
     certification.associate = (models) => {
-        certification.belongsTo(models.user);
+        certification.belongsTo(models.User);
     };
         
     return certification;

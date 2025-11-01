@@ -1,28 +1,30 @@
-import index from '../index.js';
+import models from "../models/index.js";
 
-export const createCertification = async (req, res) => {
+const Certification = models.Certification;
+
+const createCertification = async (req, res) => {
     try {
         const {certificate1, certificate2, certificate3} = req.body;
-        const newCertification = await index.certification.create({certificate1, certificate2, certificate3});
+        const newCertification = await Certification.create({certificate1, certificate2, certificate3});
         res.status(201).json(newCertification);
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 };
 
-export const getAllCertifications = async (req, res) => {
+ const getAllCertifications = async (req, res) => {
     try{
-        const certifications = await index.certification.findAll();
+        const certifications = await Certification.findAll();
         res.status(200).json(certifications);
     } catch (error){
         res.status(400).json({error: error.message});
     }
 };
 
-export const getCertificationById = async (req, res) => {
+ const getCertificationById = async (req, res) => {
     try{
         const {id} = req.params;
-        const certification = await index.certification.find({where: {id}});
+        const certification = await Certification.find({where: {id}});
         if (certification){
             res.status(200).json(certification);
         } else{
@@ -33,11 +35,11 @@ export const getCertificationById = async (req, res) => {
     }
 };
 
-export const updateCertification = async (req, res) => {
+ const updateCertification = async (req, res) => {
     try{
         const {id} = req.params;
         const {certificate1, certificate2, certificate3} = req.body;
-        const certification = await index.certification.find({where: {id}});
+        const certification = await Certification.find({where: {id}});
         if (certification){
             certification.certificate1 = certificate1;
             certification.certificate2 = certificate2;
@@ -51,10 +53,10 @@ export const updateCertification = async (req, res) => {
     }
 };
 
-export const deleteCertification = async (req, res) => {
+ const deleteCertification = async (req, res) => {
     try{
         const {id} = req.params;
-        const certification = await index.certification.find({where: {id}});
+        const certification = await Certification.find({where: {id}});
         if (certification){
             await certification.destroy({where: {id}});
             res.status(200).json({message: "Certification deleted successfully"});
@@ -63,3 +65,5 @@ export const deleteCertification = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 };
+
+export { createCertification, getAllCertifications, getCertificationById, updateCertification, deleteCertification};

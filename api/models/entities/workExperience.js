@@ -37,7 +37,7 @@ const workExpModel = (sequelize, {DataTypes}) => {
     });
 
     workExp.associate = (models) => {
-        workExp.belongsTo(models.user);
+        workExp.belongsTo(models.User);
     };
 
     return workExp;

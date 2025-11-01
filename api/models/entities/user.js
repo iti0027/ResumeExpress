@@ -4,7 +4,7 @@ const userModel = (sequelize, {DataTypes}) => {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
-            valide:{
+            validate:{
                 notEmpty: true,
             },
         },
@@ -14,7 +14,7 @@ const userModel = (sequelize, {DataTypes}) => {
             unique: true,
             allowNull: false,
             unique: true,
-            valide: {
+            validate: {
                 notEmpty: true,
             },
         },
@@ -23,7 +23,7 @@ const userModel = (sequelize, {DataTypes}) => {
             type: DataTypes.DATE,
             unique: true,
             allowNull: false,
-            valide: {
+            validate: {
                 notEmpty: true,
             },
         }

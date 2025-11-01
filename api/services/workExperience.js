@@ -1,28 +1,30 @@
-import index from '../index.js';
+import models from '../models/index.js';
 
-export const createWorkExperience = async (req, res) =>{
+const WorkExperience = models.WorkExperience;
+
+const createWorkExperience = async (req, res) =>{
     try{
         const {currentJob, companyName, startDate} = req.body;
-        const newWorkExperience = await index.workExperience.create({currentJob, companyName, startDate});
+        const newWorkExperience = await WorkExperience.create({currentJob, companyName, startDate});
         res.status(201).json(newWorkExperience);
     } catch (error){
         res.status(400).json({error: error.message});
     }
 };
 
-export const getAllWorkExperience = async (req, res) =>{
+const getAllWorkExperience = async (req, res) =>{
     try{
-        const workExperience = await index.workExperience.findALl();
+        const workExperience = await WorkExperience.findALl();
         res.status(200).json(workExperience);
     } catch(error) {
         res.status(400).json({error: error.message});
     }
 };
 
-export const getWorkExperienceById = async (req, res) => {
+const getWorkExperienceById = async (req, res) => {
     try{
         const {id} = req.params;
-        const workExperience = await index.workExperience.find({where: {id}});
+        const workExperience = await WorkExperience.find({where: {id}});
         if (workExperience){
             res.status(200).json(workExperience);
         } else{
@@ -33,11 +35,11 @@ export const getWorkExperienceById = async (req, res) => {
     }
 };
 
-export const updateWorkExperience = async (req, res)=> {
+const updateWorkExperience = async (req, res)=> {
     try{
         const {id} = req.params;
         const {currentJob, companyName, startDate} = req.body;
-        const workExperience = await index.workExperience.find({where: {id}});
+        const workExperience = await WorkExperience.find({where: {id}});
         if (workExperience){
             workExperience.currentJob = currentJob;
             workExperience.companyName = companyName;
@@ -52,10 +54,10 @@ export const updateWorkExperience = async (req, res)=> {
     }
 };
 
-export const deleteWorkExperience = async (req, res) => {
+const deleteWorkExperience = async (req, res) => {
     try{
         const {id} = req.params;
-        const workExperience = await index.workExperience.find({where: {id}});
+        const workExperience = await WorkExperience.find({where: {id}});
         if (workExperience){
             await workExperience.destroy({where: {id}});
             res.status(200).json({message: "work Experience deleted successfully"});
@@ -65,3 +67,4 @@ export const deleteWorkExperience = async (req, res) => {
     }
 };
 
+export {createWorkExperience, getAllWorkExperience, getWorkExperienceById, updateWorkExperience, deleteWorkExperience};
