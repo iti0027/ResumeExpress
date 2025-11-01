@@ -9,10 +9,10 @@ import {
 
 const router = Router();
 
-router.post('/certifications', createCertification);
-router.get('/certifications', getAllCertifications);
-router.get('/certifications/:id', getCertificationById);
-router.put('/certifications/:id', updateCertification);
-router.delete('/certifications/:id', deleteCertification);
+router.post('/', createCertification);
+router.get('/', getAllCertifications);
+router.get('/:id', getCertificationById);
+router.put('/:id', updateCertification);
+router.delete('/:id', deleteCertification);
 
 export default router;

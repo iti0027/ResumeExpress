@@ -9,7 +9,7 @@ import certificateModel from "./entities/certifications.js";
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    dialectModdule: pg,
+    dialectModule: pg,
     protocol: 'postgres',
     dialectOptions: {
         ssl: {require: true, rejectUnauthorized: false}}});
@@ -21,7 +21,7 @@ const models = {
 };
 
 Object.keys(models).forEach((key) => {
-    if("associate" in models[key]) {
+    if(typeof models[key]?.associate === "function") {
         models[key].associate(models);
     }
 });

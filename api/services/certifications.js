@@ -15,6 +15,11 @@ const createCertification = async (req, res) => {
  const getAllCertifications = async (req, res) => {
     try{
         const certifications = await Certification.findAll();
+
+        if(!certifications || certifications.length === 0){
+            return res.status(204).json({message: "Nenhum certificado encontrado"});
+        }
+        
         res.status(200).json(certifications);
     } catch (error){
         res.status(400).json({error: error.message});

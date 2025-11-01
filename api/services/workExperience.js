@@ -14,7 +14,11 @@ const createWorkExperience = async (req, res) =>{
 
 const getAllWorkExperience = async (req, res) =>{
     try{
-        const workExperience = await WorkExperience.findALl();
+        const workExperience = await WorkExperience.findAll();
+        if(!workExperience ||  workExperience.length === 0){
+            return res.status(204).json({message: "Nenhum trabalho encontrado"});
+        }
+
         res.status(200).json(workExperience);
     } catch(error) {
         res.status(400).json({error: error.message});
