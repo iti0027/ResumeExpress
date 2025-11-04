@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
     try {
         const {id} = req.params;
         const {userName, userEmail, userBirthDate} = req.body;
-        const user = await User.findByPK(id);
+        const user = await User.find({where: {id}});
         if (user){
             user.userName = userName;
             user.userEmail = userEmail;
