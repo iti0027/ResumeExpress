@@ -20,7 +20,7 @@ const userModel = (sequelize, {DataTypes}) => {
         },
 
         userBirthDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             unique: true,
             allowNull: false,
             validate: {

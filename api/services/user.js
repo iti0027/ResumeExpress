@@ -17,7 +17,7 @@ const getAllUsers = async (req, res) => {
         const users = await User.findAll();
 
         if(!users || users.length === 0){
-            return res.status(204).json({message: "Nenhum usuário encontrado"});
+            return res.status(200).json({message: "Nenhum usuário cadastrado"});
         }
         res.status(200).json(users);
     } catch (error){
@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
     try {
         const {id} = req.params;
         const {userName, userEmail, userBirthDate} = req.body;
-        const user = await User.find({where: {ide}});
+        const user = await User.findByPK(id);
         if (user){
             user.userName = userName;
             user.userEmail = userEmail;
@@ -64,7 +64,7 @@ const deleteUser = async (req, res) =>{
         const {id} = req.params;
         const user = await User.find({where: {id}});
         if (user) {
-            await user.destroy({where: {ide}});
+            await user.destroy({where: {id}});
             res.status(200).json({message: "User deleted successfully"});
         }
     } catch (error) {

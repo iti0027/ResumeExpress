@@ -17,7 +17,7 @@ const createCertification = async (req, res) => {
         const certifications = await Certification.findAll();
 
         if(!certifications || certifications.length === 0){
-            return res.status(204).json({message: "Nenhum certificado encontrado"});
+            return res.status(200).json({message: "Nenhum certificado cadastrado"});
         }
         
         res.status(200).json(certifications);

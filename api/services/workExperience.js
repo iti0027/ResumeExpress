@@ -4,8 +4,8 @@ const WorkExperience = models.WorkExperience;
 
 const createWorkExperience = async (req, res) =>{
     try{
-        const {currentJob, companyName, startDate} = req.body;
-        const newWorkExperience = await WorkExperience.create({currentJob, companyName, startDate});
+        const {currentJob, companyName, description, startDate} = req.body;
+        const newWorkExperience = await WorkExperience.create({currentJob, companyName, description, startDate});
         res.status(201).json(newWorkExperience);
     } catch (error){
         res.status(400).json({error: error.message});
@@ -16,7 +16,7 @@ const getAllWorkExperience = async (req, res) =>{
     try{
         const workExperience = await WorkExperience.findAll();
         if(!workExperience ||  workExperience.length === 0){
-            return res.status(204).json({message: "Nenhum trabalho encontrado"});
+            return res.status(200).json({message: "Nenhum trabalho cadastrado"});
         }
 
         res.status(200).json(workExperience);
@@ -42,11 +42,12 @@ const getWorkExperienceById = async (req, res) => {
 const updateWorkExperience = async (req, res)=> {
     try{
         const {id} = req.params;
-        const {currentJob, companyName, startDate} = req.body;
+        const {currentJob, companyName, description, startDate} = req.body;
         const workExperience = await WorkExperience.find({where: {id}});
         if (workExperience){
             workExperience.currentJob = currentJob;
             workExperience.companyName = companyName;
+            workExperience.description = description;
             workExperience.startDate = startDate;
             await workExperience.save();
             res.status(200).json(workExperience);
