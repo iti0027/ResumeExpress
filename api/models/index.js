@@ -1,11 +1,9 @@
 import { Sequelize } from "sequelize";
 
-
 import pg from "pg";
 import userModel from "./entities/user.js";
 import workExpModel from "./entities/workExperience.js";
 import certificateModel from "./entities/certifications.js";
-
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',

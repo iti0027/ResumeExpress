@@ -1,11 +1,8 @@
-import models from "../models/index.js";
-
-const Certification = models.Certification;
-
 const createCertification = async (req, res) => {
+    const {Certification} = req.context.models;
     try {
-        const {certificate1, certificate2, certificate3} = req.body;
-        const newCertification = await Certification.create({certificate1, certificate2, certificate3});
+        const {title, startDate, endDate,UserId} = req.body;
+        const newCertification = await Certification.create({title, startDate, endDate, UserId});
         res.status(201).json(newCertification);
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -13,6 +10,7 @@ const createCertification = async (req, res) => {
 };
 
  const getAllCertifications = async (req, res) => {
+    const {Certification} = req.context.models;
     try{
         const certifications = await Certification.findAll();
 
@@ -27,9 +25,10 @@ const createCertification = async (req, res) => {
 };
 
  const getCertificationById = async (req, res) => {
+    const {Certification} = req.context.models;
     try{
         const {id} = req.params;
-        const certification = await Certification.find({where: {id}});
+        const certification = await Certification.findByPk(id);
         if (certification){
             res.status(200).json(certification);
         } else{
@@ -41,15 +40,17 @@ const createCertification = async (req, res) => {
 };
 
  const updateCertification = async (req, res) => {
+    const {Certification} = req.context.models;
     try{
         const {id} = req.params;
-        const {certificate1, certificate2, certificate3} = req.body;
-        const certification = await Certification.find({where: {id}});
+        const {title, startDate, endDate} = req.body;
+        const certification = await Certification.findByPk(id);
         if (certification){
-            certification.certificate1 = certificate1;
-            certification.certificate2 = certificate2;
-            certification.certificate3 = certificate3;
-            await certification.sava();
+            certification.title = title;
+            certification.startDate = startDate;
+            certification.endDate = endDate;
+            await certification.save();
+            res.status(200).json(certification);
         } else{
             res.status(404).json({error: "Certification not found"});
         }
@@ -59,11 +60,12 @@ const createCertification = async (req, res) => {
 };
 
  const deleteCertification = async (req, res) => {
+    const {Certification} = req.context.models;
     try{
         const {id} = req.params;
-        const certification = await Certification.find({where: {id}});
+        const certification = await Certification.findByPk(id);
         if (certification){
-            await certification.destroy({where: {id}});
+            await certification.destroy();
             res.status(200).json({message: "Certification deleted successfully"});
         }
     } catch (error){

@@ -1,8 +1,5 @@
-import models from '../models/index.js';
-
-const User = models.User;
-
 const createUser = async (req, res) => {
+    const {User} = req.context.models;
     try {
         const {userName, userEmail, userBirthDate} = req.body;
         const newUser = await User.create({userName, userEmail, userBirthDate});
@@ -13,6 +10,9 @@ const createUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
+    const {User} = req.context.models;
+    console.log("Fetching all users", User);
+
     try{
         const users = await User.findAll();
 
@@ -27,9 +27,10 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
+    const {User} = req.context.models;
     try {
         const {id} = req.params;
-        const user = await User.find({where: {id}});
+        const user = await User.findByPk(id);
         if (user){
             res.status(200).json(user);
         } else{
@@ -41,10 +42,11 @@ const getUserById = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+    const {User} = req.context.models;
     try {
         const {id} = req.params;
         const {userName, userEmail, userBirthDate} = req.body;
-        const user = await User.find({where: {id}});
+        const user = await User.findByPk(id);
         if (user){
             user.userName = userName;
             user.userEmail = userEmail;
@@ -60,12 +62,15 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) =>{
+    const {User} = req.context.models;
     try {
         const {id} = req.params;
-        const user = await User.find({where: {id}});
+        const user = await User.findByPk(id);
         if (user) {
-            await user.destroy({where: {id}});
+            await user.destroy();
             res.status(200).json({message: "User deleted successfully"});
+        } else {
+            res.status(404).json({error: "User not found"});
         }
     } catch (error) {
         res.status(400).json({error: error.message});

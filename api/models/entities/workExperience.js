@@ -10,7 +10,6 @@ const workExpModel = (sequelize, {DataTypes}) => {
         },
         companyName:{
             type:DataTypes.STRING,
-            unique: true,
             allowNull: false,
             valide:{
                 notEmpty: true,
